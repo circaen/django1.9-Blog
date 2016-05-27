@@ -19,8 +19,8 @@ def blog_create(request):
     return render(request, "blog/form.html", context)
 
 
-def blog_detail(request, id=None):
-    instance = get_object_or_404(Post, id=id)
+def blog_detail(request, slug=None):
+    instance = get_object_or_404(Post, slug=slug)
     context = {
         "title": instance.title,
         "instance": instance,
@@ -51,8 +51,8 @@ def blog_list(request):
 
 
 
-def blog_update(request, id=None):
-    instance = get_object_or_404(Post, id=id)
+def blog_update(request, slug=None):
+    instance = get_object_or_404(Post, slug=slug)
     form = PostForm(request.POST or None, request.FILES or None, instance=instance)
     if form.is_valid():
         instance = form.save(commit=False)
@@ -68,8 +68,8 @@ def blog_update(request, id=None):
     return render(request, "blog/form.html", context)
 
 
-def blog_delete(request, id=None):
-    instance = get_object_or_404(Post, id=id)
+def blog_delete(request, slug=None):
+    instance = get_object_or_404(Post, slug=slug)
     instance.delete()
     messages.success(request, "Successfully deleted")
     return redirect("blog:list")
